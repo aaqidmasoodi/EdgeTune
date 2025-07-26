@@ -62,7 +62,7 @@ class LoRAOptimizer(BaseOptimizer):
             r=self.r,
             lora_alpha=self.lora_alpha,
             lora_dropout=self.lora_dropout,
-            target_modules=["q_proj", "v_proj", "k_proj", "o_proj"]
+            target_modules=["q", "v", "k", "o"]
         )
         self.model = get_peft_model(self.model, lora_config)
         print(f"LoRA applied with r={self.r}, alpha={self.lora_alpha}")
@@ -78,7 +78,7 @@ class LoRAOptimizer(BaseOptimizer):
         
         with torch.no_grad():
             outputs = self.model.generate(
-                inputs.input_ids,
+                **inputs,
                 max_length=128,
                 num_beams=2,
                 temperature=0.7,
@@ -121,7 +121,7 @@ class BitFitOptimizer(BaseOptimizer):
         
         with torch.no_grad():
             outputs = self.model.generate(
-                inputs.input_ids,
+                **inputs,
                 max_length=128,
                 num_beams=2,
                 temperature=0.7,

@@ -1,0 +1,77 @@
+================================================================================
+QUERY REWRITING OPTIMIZATION METHODS - EVALUATION REPORT
+================================================================================
+
+EXECUTIVE SUMMARY
+----------------------------------------
+• Best Accuracy (MRR Improvement): BITFIT
+• Fastest Method: ZOO
+• Most Memory Efficient: LORA
+
+DETAILED RESULTS BY METHOD
+----------------------------------------
+
+LORA METHOD:
+  Retrieval Performance:
+    • MRR Improvement: 0.1200
+    • Recall@10 Improvement: 0.1200
+    • NDCG@10 Improvement: 0.0025
+  Computational Performance:
+    • Average Inference Time: 0.2413s
+    • Memory Usage: 967.11MB
+    • Throughput: 4.14 queries/sec
+  Semantic Quality:
+    • Query Similarity: 0.8367
+
+BITFIT METHOD:
+  Retrieval Performance:
+    • MRR Improvement: 0.0900
+    • Recall@10 Improvement: 0.0900
+    • NDCG@10 Improvement: 0.0001
+  Computational Performance:
+    • Average Inference Time: 0.2377s
+    • Memory Usage: 1204.22MB
+    • Throughput: 4.21 queries/sec
+  Semantic Quality:
+    • Query Similarity: 0.8438
+
+ZOO METHOD:
+  Retrieval Performance:
+    • MRR Improvement: 0.1100
+    • Recall@10 Improvement: 0.1100
+    • NDCG@10 Improvement: 0.0002
+  Computational Performance:
+    • Average Inference Time: 0.2189s
+    • Memory Usage: 1422.39MB
+    • Throughput: 4.57 queries/sec
+  Semantic Quality:
+    • Query Similarity: 0.8267
+
+ES METHOD:
+  Retrieval Performance:
+    • MRR Improvement: 0.1000
+    • Recall@10 Improvement: 0.1000
+    • NDCG@10 Improvement: 0.0025
+  Computational Performance:
+    • Average Inference Time: 0.2506s
+    • Memory Usage: 1331.66MB
+    • Throughput: 3.99 queries/sec
+  Semantic Quality:
+    • Query Similarity: 0.8483
+
+
+PERFORMANCE COMPARISON TABLE
+----------------------------------------
+Method  MRR (Original)  MRR (Rewritten)  MRR Improvement  Recall@10 (Original)  Recall@10 (Rewritten)  Recall@10 Improvement  NDCG@10 (Original)  NDCG@10 (Rewritten)  NDCG@10 Improvement  Semantic Similarity  Avg Inference Time (s)  Memory Usage (MB)  Queries/Second
+  LORA            0.91             0.79            0.12                  0.91                   0.79                  0.12             0.99948             0.996955            0.002524             0.836722                0.241303         967.109375        4.144165
+BITFIT            0.91             0.82            0.09                  0.91                   0.82                  0.09             0.99948             0.999618             0.000139             0.843808                0.237691        1204.218750        4.207148
+   ZOO            0.91             0.80            0.11                  0.91                   0.80                  0.11             0.99948             0.999669             0.000190             0.826736                0.218949        1422.390625        4.567269
+    ES            0.91             0.81            0.10                  0.91                   0.81                  0.10             0.99948             0.996961            0.002519             0.848310                0.250561        1331.656250        3.991052
+
+
+RECOMMENDations
+----------------------------------------
+• For balanced performance: ZOO
+• For maximum accuracy: BITFIT
+• For real-time applications: ZOO
+• For resource-constrained devices: LORA
