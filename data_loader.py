@@ -27,6 +27,18 @@ class MSMARCOQueryRewritingDataset(Dataset):
             'rewritten_query': self.rewritten_queries[idx]
         }
 
+def custom_collate_fn(batch):
+    """Custom collate function to handle lists of variable-length passages"""
+    original_queries = [item['original_query'] for item in batch]
+    rewritten_queries = [item['rewritten_query'] for item in batch]
+    passages = [item['passages'] for item in batch]  # List[List[str]]
+    
+    return {
+        'original_query': original_queries,
+        'rewritten_query': rewritten_queries,
+        'passages': passages
+    }
+
 class MSMARCODataLoader:
     """Data loader and preprocessor for MS MARCO dataset"""
     
@@ -86,7 +98,6 @@ class MSMARCODataLoader:
         
         rewrites = []
         for query in queries:
-            # Sometimes keep original, sometimes rewrite (TODO testing... remove later)
             if random.random() < 0.7:  # 70% chance to rewrite
                 template = random.choice(rewrite_templates)
                 rewrite = template(query)
@@ -146,15 +157,15 @@ class MSMARCODataLoader:
             data_split['val']['rewrites']
         )
         
-        # Create dataloaders
-        train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-        val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+        # Create dataloaders with custom collate_fn
+        train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, collate_fn=custom_collate_fn)
+        val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, collate_fn=custom_collate_fn)
         
         return train_loader, val_loader
 
 
 if __name__ == "__main__":
-    loader = MSMARCODataLoader(subset_size=1000)  # Small subset for testing .... don't change this. it gets slow.
+    loader = MSMARCODataLoader(subset_size=1000)  # Small subset for testing
     train_loader, val_loader = loader.create_dataloaders(batch_size=8)
     
     print(f"Train batches: {len(train_loader)}")
